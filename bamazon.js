@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "",
+    password: "4eKGzay9!",
     database: "bamazon"
 });
 
@@ -23,8 +23,9 @@ function start() {
 function displayAllItems() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw (err);
+        console.log("Item ID | Product | Quantity | Price")
         for (var i = 0; i < res.length; i++) {
-            console.log(chalk.green(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + " | ʛ" + res[i].price));
+            console.log(chalk.green(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + "| " + res[i].stock_quantify +" | ʛ" + res[i].price));
         }
         askUserBuy();
     })
@@ -51,6 +52,7 @@ function askUserBuy() {
 
             } else {
                 console.log(chalk.blue("Sorry, out of stock! \n"));
+                done();
             };
         })
     })
@@ -70,7 +72,7 @@ function updateDB(id, quantityA, currentQuantity, price) {
     ],
         function (err, res) {
             if (err) throw (err);
-            console.log(chalk.bgGreen(res.affectedRows + " products updated \n"));
+            console.log(chalk.bgBlue(res.affectedRows + " products updated \n"));
         }
     )
     console.log("Your total price is ʛ" + price + "\n");
